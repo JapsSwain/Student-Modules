@@ -9,7 +9,7 @@ import { StudentsModule } from './students/students.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'password',
+      password: '',
       database: 'student_db',
       autoLoadEntities: true,
       synchronize: true, // Disable in production
