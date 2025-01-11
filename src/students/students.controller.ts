@@ -1,36 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
-import { StudentService } from './student.service';
+import { Controller, Post, Patch, Param, Delete,  Get, Body, NotFoundException } from '@nestjs/common';
+import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
-import { UpdateStudentDto } from './dto/update-student.dto';
+import { Student } from './entities/student.entity';
 
 @Controller('students')
-export class StudentController {
-  constructor(private readonly studentService: StudentService) {}
+export class StudentsController {
+  constructor(private readonly studentsService: StudentsService) {}
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
-  create(@Body() createStudentDto: CreateStudentDto) {
-    return this.studentService.create(createStudentDto);
+  async create(@Body() createStudentDto: CreateStudentDto): Promise<Student> {
+    return this.studentsService.create(createStudentDto);
   }
 
   @Get()
-  findAll() {
-    return this.studentService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.studentService.findOne(+id);
+  async findAll(): Promise<Student[]> {
+    return this.studentsService.findAll();
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
-    return this.studentService.update(+id, updateStudentDto);
+  update(@Param('id') id: number, @Body() updateStudentDto: CreateStudentDto) {
+    return this.studentsService.update(id, updateStudentDto);
   }
-
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {
-    return this.studentService.remove(+id);
-  }
+remove(@Param('id') id: number) {
+  return this.studentsService.remove(id);
+}
+
 }
