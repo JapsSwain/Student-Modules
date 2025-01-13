@@ -6,21 +6,22 @@ import { Student } from './entities/student.entity';
 @Controller('students')
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
-
+//CREATE
   @Post()
   async create(@Body() createStudentDto: CreateStudentDto): Promise<Student> {
     return this.studentsService.create(createStudentDto);
   }
-
+//FETCH
   @Get()
   async findAll(): Promise<Student[]> {
     return this.studentsService.findAll();
   }
-
+//UPDATE
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateStudentDto: CreateStudentDto) {
     return this.studentsService.update(id, updateStudentDto);
   }
+  //DELETE
   @Delete(':id')
 remove(@Param('id') id: number) {
   return this.studentsService.remove(id);
